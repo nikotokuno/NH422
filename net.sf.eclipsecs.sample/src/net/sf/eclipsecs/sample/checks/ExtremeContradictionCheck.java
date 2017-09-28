@@ -1,5 +1,7 @@
 package net.sf.eclipsecs.sample.checks;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.Collator;
 import java.util.*;
 
@@ -68,6 +70,18 @@ public class ExtremeContradictionCheck extends AbstractCheck {
 	private HashSet<String> readDictionaryWordsFromFile() {
 		HashSet<String> dictionary = new HashSet<String>();
 		
+		try {
+			Scanner file = new Scanner(new File("dictionary.txt"));
+			
+			while (file.hasNext()) {
+				dictionary.add(file.next().trim().toLowerCase());	
+			}
+		} catch (FileNotFoundException e) {
+			
+			e.printStackTrace();
+		}
+
+		
 		return dictionary;
 	}
 	
@@ -105,7 +119,7 @@ public class ExtremeContradictionCheck extends AbstractCheck {
 	            
 	            log(nameAst.getLineNo(), MESSAGE_KEY, typeName, 
 	                		allowedAbbreviationLength + 1);
-	            }
+	     }
 	  }
 	
 	 static final Collator englishCollator = Collator.getInstance(Locale.ENGLISH);
