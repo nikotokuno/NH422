@@ -2,11 +2,18 @@ package checkstyle.extension.tests;
 
 import static org.junit.Assert.*;
 
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import org.mockito.Matchers;
+
+import net.sf.eclipsecs.sample.checks.ExtremeContradictionCheck;
+
+import static org.mockito.Mockito.*;
 
 public class ExtremeContradictionCheckTest {
 
@@ -43,6 +50,13 @@ public class ExtremeContradictionCheckTest {
 
 	@Test
 	public void testSetAllowedAbbreviationLength() {
+		// Arrange
+		ExtremeContradictionCheck ecCheck = spy(new ExtremeContradictionCheck());
+		
+		// Act
+		doReturn(null).when(ecCheck).setAllowedAbbreviationLength(4);
+		
+		// Assert
 		fail("Not yet implemented");
 	}
 
@@ -53,7 +67,17 @@ public class ExtremeContradictionCheckTest {
 
 	@Test
 	public void testIsJavaKeyword() {
-		fail("Not yet implemented");
+		// Arrange
+		ExtremeContradictionCheck ecCheck = spy(new ExtremeContradictionCheck());
+		
+		doReturn(true).when(ecCheck).isJavaKeyword("abstract");
+		doReturn(true).when(ecCheck).isJavaKeyword("do");
+		doReturn(false).when(ecCheck).isJavaKeyword("chocolate");
+						
+		// Assert
+		assertTrue(ecCheck.isJavaKeyword("abstract"));
+		assertTrue(ecCheck.isJavaKeyword("do"));
+		assertFalse(ecCheck.isJavaKeyword("chocolate"));
 	}
 
 }

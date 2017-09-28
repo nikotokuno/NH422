@@ -122,8 +122,8 @@ public class ExtremeContradictionCheck extends AbstractCheck {
 	     }
 	  }
 	
-	 static final Collator englishCollator = Collator.getInstance(Locale.ENGLISH);
-	 static final String keywords[] = {
+	 public final Collator englishCollator = Collator.getInstance(Locale.ENGLISH);
+	 public final String keywords[] = {
 	                  "abstract",  "assert",       "boolean",    "break",     "byte",      "case",
 	                  "catch",     "char",         "class",      "const",     "continue",
 	                  "default",   "do",           "double",     "else",      "extends",
@@ -138,7 +138,7 @@ public class ExtremeContradictionCheck extends AbstractCheck {
 	              };
 
 
-	      public static boolean isJavaKeyword(String keyword) {
+	      public boolean isJavaKeyword(String keyword) {
 	                 return (Arrays.binarySearch(keywords, keyword, englishCollator) >= 0);
 	      } 
 	 
