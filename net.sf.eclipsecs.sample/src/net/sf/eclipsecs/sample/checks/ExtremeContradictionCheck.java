@@ -1,10 +1,15 @@
 package net.sf.eclipsecs.sample.checks;
 
+import java.text.Collator;
 import java.util.*;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.CheckUtils;
+import com.puppycrawl.tools.checkstyle.utils.JavadocUtils;
+
+import antlr.Utils;
 
 /**
  * @author nikot
@@ -101,9 +106,28 @@ public class ExtremeContradictionCheck extends AbstractCheck {
 	            log(nameAst.getLineNo(), MESSAGE_KEY, typeName, 
 	                		allowedAbbreviationLength + 1);
 	            }
-	        }
 	  }
 	
+	 static final Collator englishCollator = Collator.getInstance(Locale.ENGLISH);
+	 static final String keywords[] = {
+	                  "abstract",  "assert",       "boolean",    "break",     "byte",      "case",
+	                  "catch",     "char",         "class",      "const",     "continue",
+	                  "default",   "do",           "double",     "else",      "extends",
+	                  "false",     "final",        "finally",    "float",     "for",
+	                  "goto",      "if",           "implements", "import",    "instanceof",
+	                  "int",       "interface",    "long",       "native",    "new",
+	                  "null",      "package",      "private",    "protected", "public",
+	                  "return",    "short",        "static",     "strictfp",  "super",
+	                  "switch",    "synchronized", "this",       "throw",     "throws",
+	                  "transient", "true",         "try",        "void",      "volatile",
+	                  "while"
+	              };
+
+
+	      public static boolean isJavaKeyword(String keyword) {
+	                 return (Arrays.binarySearch(keywords, keyword, englishCollator) >= 0);
+	      } 
+	 
 	 
 	    /**
 	     * Checks if it is an ignore situation.
@@ -122,12 +146,14 @@ public class ExtremeContradictionCheck extends AbstractCheck {
 	            result = true;
 	        }
 	        
-	        // Ignore if 
+	        // Ignore if user has identified the abbreviation as allowed
 	        else if (allowedAbbreviations.contains(typeName)) {
 	            result = true;
 	        }
+	        
+	        // Ignore if the identifier is a Java keyword 
 	        else {
-	            result = CheckUtils.isReceiverParameter(ast);
+	            result = isJavaKeyword(typeName);
 	        }
 	        return result;
 	    }
