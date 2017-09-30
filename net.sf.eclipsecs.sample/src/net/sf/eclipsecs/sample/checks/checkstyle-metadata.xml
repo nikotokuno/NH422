@@ -14,5 +14,16 @@
             </property-metadata>
             <quickfix classname="net.sf.eclipsecs.sample.checks.MethodLimitQuickfix" />
         </rule-metadata>
+        
+        <rule-metadata name="%inconsistentIdentifiers.name" internal-name="inconsistentIdentifiers" parent="TreeWalker">
+            <alternative-name internal-name="net.sf.eclipsecs.sample.checks.inconsistentIdentifiersCheck" />
+            <description>%inconsistentIdentifiers.desc</description>
+         </rule-metadata>  
+         
+         <rule-metadata name="%hyponymy.name" internal-name="hyponymy" parent="TreeWalker">
+            <alternative-name internal-name="net.sf.eclipsecs.sample.checks.hyponymyCheck" />
+            <description>%hyponymy.desc</description>
+         </rule-metadata>  
+        
     </rule-group-metadata>
 </checkstyle-metadata>
