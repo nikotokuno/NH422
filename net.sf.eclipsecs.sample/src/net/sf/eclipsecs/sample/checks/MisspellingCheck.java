@@ -78,14 +78,27 @@ public class MisspellingCheck extends AbstractCheck {
 	
 	 @Override
 	 public void visitToken(DetailAST ast) {
-
+		 		this.setEnglishDictionary();
+		 
 	            final DetailAST nameAst = ast.findFirstToken(TokenTypes.IDENT);
 	            final String typeName = nameAst.getText();
 	            
 	            // check misspelling of identifier
+	            if(isMisspelled(typeName)) {
 	            
 	            log(nameAst.getLineNo(), MESSAGE_KEY, typeName, 
 	                		typeName.length());
+	            }
 	     }
+	 
+	 public boolean isMisspelled(String word) {
+		 boolean isMisspelled = false;
+		 
+		 if(!this.englishDictionary.contains(word)) {
+			 isMisspelled = true;
+		 }
+		 
+		 return isMisspelled;
+	 }
 }
 

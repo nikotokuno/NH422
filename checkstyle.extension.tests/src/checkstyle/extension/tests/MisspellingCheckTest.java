@@ -96,4 +96,19 @@ public class MisspellingCheckTest {
 		assertNotNull(ecCheck.getEnglishDictionary());
 	}
 
+	@Test
+	public void testIsMisspelled() {
+		// Arrange
+		MisspellingCheck ecCheck = spy(new MisspellingCheck());
+		
+		// Act
+		ecCheck.setEnglishDictionary();
+		doReturn(false).when(ecCheck).isMisspelled("apple");
+		doReturn(true).when(ecCheck).isMisspelled("appleez");
+		
+		// Assert
+		assertFalse(ecCheck.isMisspelled("apple"));
+		assertTrue(ecCheck.isMisspelled("appleez"));
+	}
+	
 }
