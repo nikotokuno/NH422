@@ -52,6 +52,10 @@ public class ExtremeContradictionCheck extends AbstractCheck {
      * in identifiers to check for. Default is 3. 
      */
     private int allowedAbbreviationLength = 3;
+    
+    public int getAllowedAbbreviationLength() {
+    	return this.allowedAbbreviationLength;
+    }
 	
 	/**
 	 * @return the englishDictionary
@@ -70,8 +74,11 @@ public class ExtremeContradictionCheck extends AbstractCheck {
 	private HashSet<String> readDictionaryWordsFromFile() {
 		HashSet<String> dictionary = new HashSet<String>();
 		
+/*		File f = new File(".");
+		for(String fileNames : f.list()) System.out.println(fileNames);*/
+		
 		try {
-			Scanner file = new Scanner(new File("dictionary.txt"));
+			Scanner file = new Scanner(new File("C:\\Users\\nikot\\Documents\\TEMP\\NH422\\net.sf.eclipsecs.sample\\dictionary.txt"));
 			
 			while (file.hasNext()) {
 				dictionary.add(file.next().trim().toLowerCase());	

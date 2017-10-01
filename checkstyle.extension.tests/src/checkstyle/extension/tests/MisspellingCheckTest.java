@@ -1,7 +1,16 @@
+/**
+ * 
+ */
 package checkstyle.extension.tests;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.HashSet;
+import java.util.Scanner;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -9,44 +18,46 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import org.mockito.Matchers;
+import net.sf.eclipsecs.sample.checks.MisspellingCheck;
 
-import net.sf.eclipsecs.sample.checks.ExtremeContradictionCheck;
+/**
+ * @author nikot
+ *
+ */
+public class MisspellingCheckTest {
 
-import static org.mockito.Mockito.*;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.HashSet;
-import java.util.Scanner;
-
-public class ExtremeContradictionCheckTest {
-
+	/**
+	 * @throws java.lang.Exception
+	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
 
+	/**
+	 * @throws java.lang.Exception
+	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
 
+	/**
+	 * @throws java.lang.Exception
+	 */
 	@Before
 	public void setUp() throws Exception {
 	}
 
+	/**
+	 * @throws java.lang.Exception
+	 */
 	@After
 	public void tearDown() throws Exception {
 	}
 
 	@Test
-	public void testGetDefaultTokens() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetEnglishDictionary() {
 		// Arrange
-		ExtremeContradictionCheck ecCheck = spy(new ExtremeContradictionCheck());
+		MisspellingCheck ecCheck = spy(new MisspellingCheck());
 		HashSet<String> tempDict = new HashSet<String>();
 				
 		// Act
@@ -69,11 +80,11 @@ public class ExtremeContradictionCheckTest {
 		assertNotNull(ecCheck.getEnglishDictionary());
 		assertEquals(tempDict, ecCheck.getEnglishDictionary());
 	}
-
+	
 	@Test
 	public void testSetEnglishDictionary() {
 		// Arrange
-		ExtremeContradictionCheck ecCheck = spy(new ExtremeContradictionCheck());
+		MisspellingCheck ecCheck = spy(new MisspellingCheck());
 		HashSet<String> tempDict = new HashSet<String>();
 		
 		// Act
@@ -83,38 +94,6 @@ public class ExtremeContradictionCheckTest {
 		// Assert
 		
 		assertNotNull(ecCheck.getEnglishDictionary());
-	}
-
-	@Test
-	public void testSetAllowedAbbreviationLength() {
-		// Arrange
-		ExtremeContradictionCheck ecCheck = spy(new ExtremeContradictionCheck());
-		
-		// Act
-		ecCheck.setAllowedAbbreviationLength(4);
-		
-		// Assert
-		assertEquals(4, ecCheck.getAllowedAbbreviationLength());
-	}
-
-	@Test
-	public void testVisitTokenDetailAST() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testIsJavaKeyword() {
-		// Arrange
-		ExtremeContradictionCheck ecCheck = spy(new ExtremeContradictionCheck());
-		
-		doReturn(true).when(ecCheck).isJavaKeyword("abstract");
-		doReturn(true).when(ecCheck).isJavaKeyword("do");
-		doReturn(false).when(ecCheck).isJavaKeyword("chocolate");
-						
-		// Assert
-		assertTrue(ecCheck.isJavaKeyword("abstract"));
-		assertTrue(ecCheck.isJavaKeyword("do"));
-		assertFalse(ecCheck.isJavaKeyword("chocolate"));
 	}
 
 }
