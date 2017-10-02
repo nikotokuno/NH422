@@ -20,6 +20,9 @@ import org.junit.Test;
 
 import net.sf.eclipsecs.sample.checks.MisspellingCheck;
 
+import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
+import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
+
 /**
  * @author nikot
  *
