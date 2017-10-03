@@ -3,32 +3,31 @@
  */
 package checkstyle.extension.tests.integration;
 
-import static org.junit.Assert.*;
-
+import org.easymock.EasyMock;
+import org.easymock.Mock;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import org.easymock.EasyMock;
-import org.easymock.Mock;
 import org.junit.runner.RunWith;
 import org.powermock.api.easymock.PowerMock;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import static org.mockito.Mockito.*;
-
 import net.sf.eclipsecs.sample.checks.ExtremeContradictionCheck;
+import net.sf.eclipsecs.sample.checks.MisspellingCheck;
+
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.*;
 
 /**
  * @author nikot
  *
  */
-public class ExtremeContradictionIntegrationTest {
-	
+public class MisspellingIntegrationTest {
+
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -56,10 +55,10 @@ public class ExtremeContradictionIntegrationTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-
+	
 	@Test
 	public void testEnglishDictionary() throws Exception {
-		ExtremeContradictionCheck mCheck = spy(new ExtremeContradictionCheck());
+		MisspellingCheck mCheck = spy(new MisspellingCheck());
 		
 		mCheck.setEnglishDictionary();
 		
@@ -67,31 +66,4 @@ public class ExtremeContradictionIntegrationTest {
 		
 		assertNotNull(mCheck.getEnglishDictionary());
 	}
-	
-	@Test
-	public void testIsFalseIgnoreSituation() {
-		ExtremeContradictionCheck mCheck = spy(new ExtremeContradictionCheck());
-		String wordCheck = "aBz";
-		
-		doReturn(false).when(mCheck).isJavaKeyword(wordCheck);
-		doReturn(false).when(mCheck).isIgnoreSituation(wordCheck);
-		
-		assertFalse(mCheck.isJavaKeyword(wordCheck));
-		assertFalse(mCheck.isIgnoreSituation(wordCheck));
-				
-	}
-	
-	@Test
-	public void testIsTrueIgnoreSituation() {
-		ExtremeContradictionCheck mCheck = spy(new ExtremeContradictionCheck());
-		String wordCheck = "Apple";
-		
-		doReturn(false).when(mCheck).isJavaKeyword(wordCheck);
-		doReturn(true).when(mCheck).isIgnoreSituation(wordCheck);
-		
-		assertFalse(mCheck.isJavaKeyword(wordCheck));
-		assertTrue(mCheck.isIgnoreSituation(wordCheck));
-				
-	}
-
 }
