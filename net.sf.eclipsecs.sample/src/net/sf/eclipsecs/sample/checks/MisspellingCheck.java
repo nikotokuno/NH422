@@ -44,7 +44,7 @@ public class MisspellingCheck extends AbstractCheck {
 		this.englishDictionary = readDictionaryWordsFromFile();
 	}
 	
-	private HashSet<String> readDictionaryWordsFromFile() {
+	public HashSet<String> readDictionaryWordsFromFile() {
 		HashSet<String> dictionary = new HashSet<String>();
 		
 		try {
@@ -84,10 +84,8 @@ public class MisspellingCheck extends AbstractCheck {
 	            final String typeName = nameAst.getText();
 	            
 	            // check misspelling of identifier
-	            if(isMisspelled(typeName)) {
-	            
-	            log(nameAst.getLineNo(), MESSAGE_KEY, typeName, 
-	                		typeName.length());
+	            if(isMisspelled(typeName.toLowerCase()) == true) {
+	            	log(nameAst.getLineNo(), MESSAGE_KEY, typeName, "english");
 	            }
 	     }
 	 

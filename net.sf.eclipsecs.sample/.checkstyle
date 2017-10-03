@@ -4,7 +4,9 @@
   <local-check-config name="Test" location="sample_checks.xml" type="project" description="">
     <additional-data name="protect-config-file" value="false"/>
   </local-check-config>
-  <fileset name="all" enabled="true" check-config-name="Test" local="true">
+  <local-check-config name="TT" location="internal_config_1506993637622.xml" type="internal" description=""/>
+  <fileset name="all" enabled="true" check-config-name="TT" local="true">
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>
+  <filter name="NonSrcDirs" enabled="false"/>
 </fileset-config>

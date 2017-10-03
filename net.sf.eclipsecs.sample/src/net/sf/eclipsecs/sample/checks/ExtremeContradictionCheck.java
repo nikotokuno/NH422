@@ -32,6 +32,12 @@ import antlr.Utils;
  */
 public class ExtremeContradictionCheck extends AbstractCheck {
 	
+	public int Tacoz = 10;
+	
+	public void Tacoz () {
+		
+	}
+	
     /**
      * Warning message key.
      */

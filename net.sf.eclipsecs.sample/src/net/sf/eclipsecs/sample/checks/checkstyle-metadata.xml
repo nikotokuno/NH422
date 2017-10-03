@@ -14,5 +14,11 @@
             </property-metadata>
             <quickfix classname="net.sf.eclipsecs.sample.checks.MethodLimitQuickfix" />
         </rule-metadata>
+        
+        <rule-metadata name="%Misspelling.name" internal-name="Misspelling" parent="TreeWalker">
+            <alternative-name internal-name="net.sf.eclipsecs.sample.checks.MisspellingCheck" />
+            <description>%Misspelling.desc</description>
+        </rule-metadata>
+        
     </rule-group-metadata>
 </checkstyle-metadata>
