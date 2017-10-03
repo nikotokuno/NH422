@@ -5,7 +5,7 @@
     <additional-data name="protect-config-file" value="false"/>
   </local-check-config>
   <local-check-config name="TT" location="internal_config_1506993637622.xml" type="internal" description=""/>
-  <fileset name="all" enabled="true" check-config-name="TT" local="true">
+  <fileset name="all" enabled="true" check-config-name="Google Checks" local="false">
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>
   <filter name="NonSrcDirs" enabled="false"/>

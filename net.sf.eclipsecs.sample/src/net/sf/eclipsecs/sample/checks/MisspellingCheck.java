@@ -85,7 +85,7 @@ public class MisspellingCheck extends AbstractCheck {
 	            
 	            // check misspelling of identifier
 	            if(isMisspelled(typeName.toLowerCase()) == true) {
-	            	log(nameAst.getLineNo(), MESSAGE_KEY, typeName, "english");
+	            	log(nameAst.getLineNo(), MESSAGE_KEY);
 	            }
 	     }
 	 
