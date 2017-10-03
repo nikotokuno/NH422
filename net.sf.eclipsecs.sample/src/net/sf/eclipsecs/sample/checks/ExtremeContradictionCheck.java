@@ -32,16 +32,10 @@ import antlr.Utils;
  */
 public class ExtremeContradictionCheck extends AbstractCheck {
 	
-	public int Tacoz = 10;
-	
-	public void Tacoz () {
-		
-	}
-	
     /**
      * Warning message key.
      */
-    public static final String MESSAGE_KEY = "abbreviation.as.word";
+    public static final String MESSAGE_KEY = "extremecontradiction.in.identifier";
 	
 	/**
      * Set of allowed English words.
@@ -130,8 +124,7 @@ public class ExtremeContradictionCheck extends AbstractCheck {
 	            final DetailAST nameAst = ast.findFirstToken(TokenTypes.IDENT);
 	            final String typeName = nameAst.getText();
 	            
-	            log(nameAst.getLineNo(), MESSAGE_KEY, typeName, 
-	                		allowedAbbreviationLength + 1);
+	            log(nameAst.getLineNo(), MESSAGE_KEY);
 	     }
 	  }
 	
@@ -163,13 +156,16 @@ public class ExtremeContradictionCheck extends AbstractCheck {
 	     *         node.
 	     */
 	    private boolean isIgnoreSituation(DetailAST ast) {
+	    	
+	    	setEnglishDictionary();
+	    	
 	    	final DetailAST nameAst = ast.findFirstToken(TokenTypes.IDENT);
             final String typeName = nameAst.getText();
 
 	        final boolean result;
 	        
 	        // Ignore if the identifier is in the English dictionary i.e. it, on
-	        if (englishDictionary.add(typeName)) {
+	        if (englishDictionary.contains(typeName)) {
 	            result = true;
 	        }
 	        

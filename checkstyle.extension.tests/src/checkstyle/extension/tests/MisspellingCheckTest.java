@@ -42,7 +42,7 @@ public class MisspellingCheckTest  {
 	
 	// unit - only methods we make
 	// integration - stub all methods 
-	// system - no funtional issues 0 performance - memory constraint 
+	// system - no functional issues | performance - memory constraint 
 
 	private static final int AMOUNT_IDENT_MISSPELLED = 6;
 	

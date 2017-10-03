@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.mockito.Matchers;
 
 import net.sf.eclipsecs.sample.checks.ExtremeContradictionCheck;
+import net.sf.eclipsecs.sample.checks.MisspellingCheck;
 
 import static org.mockito.Mockito.*;
 
@@ -36,11 +37,6 @@ public class ExtremeContradictionCheckTest {
 
 	@After
 	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void testGetDefaultTokens() {
-		fail("Not yet implemented");
 	}
 
 	@Test
@@ -84,6 +80,33 @@ public class ExtremeContradictionCheckTest {
 		
 		assertNotNull(ecCheck.getEnglishDictionary());
 	}
+	
+	@Test
+	public void testReadDictionaryWordsFromFile() {
+		// Arrange
+				MisspellingCheck ecCheck = spy(new MisspellingCheck());
+				HashSet<String> tempDict = new HashSet<String>();
+						
+				// Act
+				ecCheck.setEnglishDictionary();
+				doReturn(tempDict).when(ecCheck).readDictionaryWordsFromFile();
+						
+				try {
+					Scanner file = new Scanner(new File("C:\\Users\\nikot\\Documents\\TEMP\\NH422\\net.sf.eclipsecs.sample\\dictionary.txt"));
+						
+					while (file.hasNext()) {
+						tempDict.add(file.next().trim().toLowerCase());	
+					}
+					} catch (FileNotFoundException e) {
+							
+						e.printStackTrace();
+					}
+						
+				// Assert
+						
+				assertNotNull(ecCheck.readDictionaryWordsFromFile());
+				assertEquals(tempDict, ecCheck.readDictionaryWordsFromFile());	
+	}
 
 	@Test
 	public void testSetAllowedAbbreviationLength() {
@@ -97,10 +120,6 @@ public class ExtremeContradictionCheckTest {
 		assertEquals(4, ecCheck.getAllowedAbbreviationLength());
 	}
 
-	@Test
-	public void testVisitTokenDetailAST() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testIsJavaKeyword() {
