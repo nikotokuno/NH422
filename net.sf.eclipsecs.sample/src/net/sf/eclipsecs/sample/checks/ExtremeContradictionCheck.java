@@ -71,7 +71,7 @@ public class ExtremeContradictionCheck extends AbstractCheck {
 		this.englishDictionary = readDictionaryWordsFromFile();
 	}
 	
-	private HashSet<String> readDictionaryWordsFromFile() {
+	public HashSet<String> readDictionaryWordsFromFile() {
 		HashSet<String> dictionary = new HashSet<String>();
 		
 /*		File f = new File(".");
@@ -156,7 +156,7 @@ public class ExtremeContradictionCheck extends AbstractCheck {
 	     * @return true if it is an ignore situation found for given input DetailAST
 	     *         node.
 	     */
-	    private boolean isIgnoreSituation(String ident) {
+	    public boolean isIgnoreSituation(String ident) {
 	    	
 	    	setEnglishDictionary();
 
