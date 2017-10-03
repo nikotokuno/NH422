@@ -119,13 +119,14 @@ public class ExtremeContradictionCheck extends AbstractCheck {
 	 @Override
 	 public void visitToken(DetailAST ast) {
 		 
-		 if (!isIgnoreSituation(ast)) {
+		 
 
 	            final DetailAST nameAst = ast.findFirstToken(TokenTypes.IDENT);
 	            final String typeName = nameAst.getText();
 	            
-	            log(nameAst.getLineNo(), MESSAGE_KEY);
-	     }
+	            if (!isIgnoreSituation(typeName.toLowerCase())) {
+	            	log(nameAst.getLineNo(), MESSAGE_KEY);
+	            }
 	  }
 	
 	 public final Collator englishCollator = Collator.getInstance(Locale.ENGLISH);
@@ -155,28 +156,30 @@ public class ExtremeContradictionCheck extends AbstractCheck {
 	     * @return true if it is an ignore situation found for given input DetailAST
 	     *         node.
 	     */
-	    private boolean isIgnoreSituation(DetailAST ast) {
+	    private boolean isIgnoreSituation(String ident) {
 	    	
 	    	setEnglishDictionary();
-	    	
-	    	final DetailAST nameAst = ast.findFirstToken(TokenTypes.IDENT);
-            final String typeName = nameAst.getText();
 
-	        final boolean result;
+	        boolean result = false;
+	        
+	        // if identifier has more characters than the check's length, ignore.
+	        if (ident.length() > allowedAbbreviationLength) {
+	            result = true;
+	        }
 	        
 	        // Ignore if the identifier is in the English dictionary i.e. it, on
-	        if (englishDictionary.contains(typeName)) {
+	        else if (englishDictionary.contains(ident)) {
 	            result = true;
 	        }
 	        
 	        // Ignore if user has identified the abbreviation as allowed
-	        else if (allowedAbbreviations.contains(typeName)) {
+	        else if (allowedAbbreviations.contains(ident)) {
 	            result = true;
 	        }
 	        
 	        // Ignore if the identifier is a Java keyword 
 	        else {
-	            result = isJavaKeyword(typeName);
+	            result = isJavaKeyword(ident);
 	        }
 	        return result;
 	    }
