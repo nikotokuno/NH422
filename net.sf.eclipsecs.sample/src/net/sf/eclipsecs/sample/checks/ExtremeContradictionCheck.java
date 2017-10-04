@@ -35,7 +35,7 @@ public class ExtremeContradictionCheck extends AbstractCheck {
     /**
      * Warning message key.
      */
-    public static final String MESSAGE_KEY = "abbreviation.as.word";
+    public static final String MESSAGE_KEY = "extremecontradiction.in.identifier";
 	
 	/**
      * Set of allowed English words.
@@ -52,6 +52,10 @@ public class ExtremeContradictionCheck extends AbstractCheck {
      * in identifiers to check for. Default is 3. 
      */
     private int allowedAbbreviationLength = 3;
+    
+    public int getAllowedAbbreviationLength() {
+    	return this.allowedAbbreviationLength;
+    }
 	
 	/**
 	 * @return the englishDictionary
@@ -67,11 +71,14 @@ public class ExtremeContradictionCheck extends AbstractCheck {
 		this.englishDictionary = readDictionaryWordsFromFile();
 	}
 	
-	private HashSet<String> readDictionaryWordsFromFile() {
+	public HashSet<String> readDictionaryWordsFromFile() {
 		HashSet<String> dictionary = new HashSet<String>();
 		
+/*		File f = new File(".");
+		for(String fileNames : f.list()) System.out.println(fileNames);*/
+		
 		try {
-			Scanner file = new Scanner(new File("dictionary.txt"));
+			Scanner file = new Scanner(new File("C:\\Users\\nikot\\Documents\\TEMP\\NH422\\net.sf.eclipsecs.sample\\dictionary.txt"));
 			
 			while (file.hasNext()) {
 				dictionary.add(file.next().trim().toLowerCase());	
@@ -112,14 +119,14 @@ public class ExtremeContradictionCheck extends AbstractCheck {
 	 @Override
 	 public void visitToken(DetailAST ast) {
 		 
-		 if (!isIgnoreSituation(ast)) {
+		 
 
 	            final DetailAST nameAst = ast.findFirstToken(TokenTypes.IDENT);
 	            final String typeName = nameAst.getText();
 	            
-	            log(nameAst.getLineNo(), MESSAGE_KEY, typeName, 
-	                		allowedAbbreviationLength + 1);
-	     }
+	            if (!isIgnoreSituation(typeName.toLowerCase())) {
+	            	log(nameAst.getLineNo(), MESSAGE_KEY);
+	            }
 	  }
 	
 	 public final Collator englishCollator = Collator.getInstance(Locale.ENGLISH);
@@ -149,25 +156,30 @@ public class ExtremeContradictionCheck extends AbstractCheck {
 	     * @return true if it is an ignore situation found for given input DetailAST
 	     *         node.
 	     */
-	    private boolean isIgnoreSituation(DetailAST ast) {
-	    	final DetailAST nameAst = ast.findFirstToken(TokenTypes.IDENT);
-            final String typeName = nameAst.getText();
+	    public boolean isIgnoreSituation(String ident) {
+	    	
+	    	setEnglishDictionary();
 
-	        final boolean result;
+	        boolean result = false;
+	        
+	        // if identifier has more characters than the check's length, ignore.
+	        if (ident.length() > allowedAbbreviationLength) {
+	            result = true;
+	        }
 	        
 	        // Ignore if the identifier is in the English dictionary i.e. it, on
-	        if (englishDictionary.add(typeName)) {
+	        else if (englishDictionary.contains(ident)) {
 	            result = true;
 	        }
 	        
 	        // Ignore if user has identified the abbreviation as allowed
-	        else if (allowedAbbreviations.contains(typeName)) {
+	        else if (allowedAbbreviations.contains(ident)) {
 	            result = true;
 	        }
 	        
 	        // Ignore if the identifier is a Java keyword 
 	        else {
-	            result = isJavaKeyword(typeName);
+	            result = isJavaKeyword(ident);
 	        }
 	        return result;
 	    }

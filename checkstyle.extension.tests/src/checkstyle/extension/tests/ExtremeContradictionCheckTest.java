@@ -12,8 +12,14 @@ import org.junit.Test;
 import org.mockito.Matchers;
 
 import net.sf.eclipsecs.sample.checks.ExtremeContradictionCheck;
+import net.sf.eclipsecs.sample.checks.MisspellingCheck;
 
 import static org.mockito.Mockito.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.HashSet;
+import java.util.Scanner;
 
 public class ExtremeContradictionCheckTest {
 
@@ -34,18 +40,72 @@ public class ExtremeContradictionCheckTest {
 	}
 
 	@Test
-	public void testGetDefaultTokens() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetEnglishDictionary() {
-		fail("Not yet implemented");
+		// Arrange
+		ExtremeContradictionCheck ecCheck = spy(new ExtremeContradictionCheck());
+		HashSet<String> tempDict = new HashSet<String>();
+				
+		// Act
+		ecCheck.setEnglishDictionary();
+		doReturn(tempDict).when(ecCheck).getEnglishDictionary();
+				
+		try {
+			Scanner file = new Scanner(new File("C:\\Users\\nikot\\Documents\\TEMP\\NH422\\net.sf.eclipsecs.sample\\dictionary.txt"));
+				
+			while (file.hasNext()) {
+				tempDict.add(file.next().trim().toLowerCase());	
+			}
+			} catch (FileNotFoundException e) {
+					
+				e.printStackTrace();
+			}
+				
+		// Assert
+				
+		assertNotNull(ecCheck.getEnglishDictionary());
+		assertEquals(tempDict, ecCheck.getEnglishDictionary());
 	}
 
 	@Test
 	public void testSetEnglishDictionary() {
-		fail("Not yet implemented");
+		// Arrange
+		ExtremeContradictionCheck ecCheck = spy(new ExtremeContradictionCheck());
+		HashSet<String> tempDict = new HashSet<String>();
+		
+		// Act
+		ecCheck.setEnglishDictionary();
+		doReturn(tempDict).when(ecCheck).getEnglishDictionary();
+		
+		// Assert
+		
+		assertNotNull(ecCheck.getEnglishDictionary());
+	}
+	
+	@Test
+	public void testReadDictionaryWordsFromFile() {
+		// Arrange
+				MisspellingCheck ecCheck = spy(new MisspellingCheck());
+				HashSet<String> tempDict = new HashSet<String>();
+						
+				// Act
+				ecCheck.setEnglishDictionary();
+				doReturn(tempDict).when(ecCheck).readDictionaryWordsFromFile();
+						
+				try {
+					Scanner file = new Scanner(new File("C:\\Users\\nikot\\Documents\\TEMP\\NH422\\net.sf.eclipsecs.sample\\dictionary.txt"));
+						
+					while (file.hasNext()) {
+						tempDict.add(file.next().trim().toLowerCase());	
+					}
+					} catch (FileNotFoundException e) {
+							
+						e.printStackTrace();
+					}
+						
+				// Assert
+						
+				assertNotNull(ecCheck.readDictionaryWordsFromFile());
+				assertEquals(tempDict, ecCheck.readDictionaryWordsFromFile());	
 	}
 
 	@Test
@@ -54,16 +114,12 @@ public class ExtremeContradictionCheckTest {
 		ExtremeContradictionCheck ecCheck = spy(new ExtremeContradictionCheck());
 		
 		// Act
-		doReturn(null).when(ecCheck).setAllowedAbbreviationLength(4);
+		ecCheck.setAllowedAbbreviationLength(4);
 		
 		// Assert
-		fail("Not yet implemented");
+		assertEquals(4, ecCheck.getAllowedAbbreviationLength());
 	}
 
-	@Test
-	public void testVisitTokenDetailAST() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testIsJavaKeyword() {

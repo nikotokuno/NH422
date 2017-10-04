@@ -15,6 +15,7 @@
             <quickfix classname="net.sf.eclipsecs.sample.checks.MethodLimitQuickfix" />
         </rule-metadata>
         
+<<<<<<< HEAD
         <rule-metadata name="%inconsistentIdentifiers.name" internal-name="inconsistentIdentifiers" parent="TreeWalker">
             <alternative-name internal-name="net.sf.eclipsecs.sample.checks.inconsistentIdentifiersCheck" />
             <description>%inconsistentIdentifiers.desc</description>
@@ -24,6 +25,20 @@
             <alternative-name internal-name="net.sf.eclipsecs.sample.checks.hyponymyCheck" />
             <description>%hyponymy.desc</description>
          </rule-metadata>  
+=======
+        <rule-metadata name="%Misspelling.name" internal-name="Misspelling" parent="TreeWalker">
+            <alternative-name internal-name="net.sf.eclipsecs.sample.checks.MisspellingCheck" />
+            <description>%Misspelling.desc</description>
+        </rule-metadata>
+        
+        <rule-metadata name="%ExtremeContradiction.name" internal-name="ExtremeContradiction" parent="TreeWalker">
+            <alternative-name internal-name="net.sf.eclipsecs.sample.checks.ExtremeContradictionCheck" />
+            <description>%ExtremeContradiction.desc</description>
+            <property-metadata name="allowedAbbreviationLength" datatype="Integer" default-value="3">
+                <description>The maximum number of characters to look for in identifiers to check for extreme contradiction.</description>
+            </property-metadata>
+        </rule-metadata>
+>>>>>>> master
         
     </rule-group-metadata>
 </checkstyle-metadata>
