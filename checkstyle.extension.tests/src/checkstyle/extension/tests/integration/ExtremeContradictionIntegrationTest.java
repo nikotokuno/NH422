@@ -58,7 +58,7 @@ public class ExtremeContradictionIntegrationTest {
 	}
 
 	@Test
-	public void testEnglishDictionary() throws Exception {
+	public void testEnglishDictionary() throws Exception {		
 		ExtremeContradictionCheck mCheck = spy(new ExtremeContradictionCheck());
 		
 		mCheck.setEnglishDictionary();

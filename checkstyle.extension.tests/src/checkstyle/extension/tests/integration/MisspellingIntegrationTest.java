@@ -57,7 +57,7 @@ public class MisspellingIntegrationTest {
 	}
 	
 	@Test
-	public void testEnglishDictionary() throws Exception {
+	public void testEnglishDictionary() throws Exception {		
 		MisspellingCheck mCheck = spy(new MisspellingCheck());
 		
 		mCheck.setEnglishDictionary();
