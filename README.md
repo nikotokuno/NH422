@@ -10,7 +10,7 @@ Repository for CptS 422 Course Project - Eclipse Plugin to Detect Lexical Metric
 ## Metrics Chosen: ##  
 
 __Niko Tokuno__ -> Extreme Contradiction and Misspelling  
-__Hasnain Khan__ -> Hyponymy and Inconsistent Identifiers  
+__Hasnain Mazhar__ -> Hyponymy and Inconsistent Identifiers  
 
 ## Deliverable Report ##  
 
