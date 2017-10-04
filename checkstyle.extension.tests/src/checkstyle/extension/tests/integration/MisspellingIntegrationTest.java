@@ -19,7 +19,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import net.sf.eclipsecs.sample.checks.ExtremeContradictionCheck;
 import net.sf.eclipsecs.sample.checks.MisspellingCheck;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -65,5 +65,20 @@ public class MisspellingIntegrationTest {
 		doReturn(mCheck.getEnglishDictionary()).when(mCheck).readDictionaryWordsFromFile();
 		
 		assertNotNull(mCheck.getEnglishDictionary());
+	}
+	
+	@Test
+	public void testMisspelling() throws Exception {
+		// Arrange
+		MisspellingCheck check = new MisspellingCheck();
+		String testWord1 = "Apple";
+		String testWord2 = "donots";
+		
+		// Act
+		// set the english dictionary
+		check.setEnglishDictionary();
+		
+		assertEquals(false, check.isMisspelled(testWord1));
+		assertEquals(true, check.isMisspelled(testWord2));
 	}
 }
