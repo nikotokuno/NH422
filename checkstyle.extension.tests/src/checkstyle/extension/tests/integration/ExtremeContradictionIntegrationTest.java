@@ -14,6 +14,7 @@ import org.junit.internal.runners.JUnit4ClassRunner;
 import org.easymock.EasyMock;
 import org.easymock.Mock;
 import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnit44Runner;
 import org.powermock.api.easymock.PowerMock;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -33,9 +34,12 @@ import net.sf.eclipsecs.sample.checks.ExtremeContradictionCheck;
  * @author nikot
  *
  */
-@RunWith(JUnit4ClassRunner.class)
-@PrepareForTest(ExtremeContradictionCheck.class)
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({ExtremeContradictionCheck.class,DetailAST.class})
 public class ExtremeContradictionIntegrationTest {
+	
+	@Mock
+	ExtremeContradictionCheck mCheck;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -56,6 +60,7 @@ public class ExtremeContradictionIntegrationTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		
 	}
 
 	/**
@@ -114,6 +119,22 @@ public class ExtremeContradictionIntegrationTest {
 		
 		assertFalse(mCheck.isJavaKeyword(wordCheck));
 		assertTrue(mCheck.isIgnoreSituation(wordCheck));
+	}
+	
+	@Test
+	public void testExtremeContradiction() {
+		// Arrange
+		ExtremeContradictionCheck mCheck = PowerMockito.mock(ExtremeContradictionCheck.class);
+		DetailAST dAST = PowerMockito.mock(DetailAST.class);
+		
+		// Act
+		doReturn("a").when(dAST).getText();
+		doReturn(false).when(mCheck).isJavaKeyword("a");
+		
+		//mCheck.visitToken(dAST);
+		
+		// Assert
+		assertEquals(false, mCheck.isIgnoreSituation(dAST.getText()));
 	}
 	
 	@Test
