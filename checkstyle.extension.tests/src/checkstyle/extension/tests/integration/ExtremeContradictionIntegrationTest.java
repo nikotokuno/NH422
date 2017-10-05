@@ -21,6 +21,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import antlr.Token;
 import antlr.collections.AST;
@@ -69,92 +70,90 @@ public class ExtremeContradictionIntegrationTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-
+	
+	/* 
+	 * h = 2
+	 * methods:
+	 * 	stub: setDictionary(), isIgnoreSituation() 
+	 * 	call: isJavaKeyword()
+	 */
 	@Test
-	public void testEnglishDictionary() throws Exception {		
+	public void testExtremeContradiction_isJavaKeyword() {		
 		ExtremeContradictionCheck mCheck = spy(new ExtremeContradictionCheck());
+		String wordCheck = "Apple";
 		
+		doReturn(true).when(mCheck).isIgnoreSituation(wordCheck);
+		mCheck.isIgnoreSituation(wordCheck);
+		
+		assertFalse(mCheck.isJavaKeyword(wordCheck));
+	}
+	
+	/* 
+	 * h = 2
+	 * methods:
+	 * 	stub: isIgnoreSituation() 
+	 * 	call: setDictionary(), isJavaKeyword()
+	 */
+	@Test
+	public void testExtremeContradiction_setDictionary() {		
+		ExtremeContradictionCheck mCheck = PowerMockito.mock(ExtremeContradictionCheck.class);
+		String wordCheck = "Apple";
+		
+		doReturn(true).when(mCheck).isIgnoreSituation(wordCheck);
+
 		mCheck.setEnglishDictionary();
 		
-		doReturn(mCheck.getEnglishDictionary()).when(mCheck).readDictionaryWordsFromFile();
-		
 		assertNotNull(mCheck.getEnglishDictionary());
-	}
-	
-	@Test
-	public void testIsFalseIgnoreSituation() {
-		ExtremeContradictionCheck mCheck = spy(new ExtremeContradictionCheck());
-		String wordCheck = "aBz";
-		
-		doReturn(false).when(mCheck).isJavaKeyword(wordCheck);
-		doReturn(false).when(mCheck).isIgnoreSituation(wordCheck);
-		
 		assertFalse(mCheck.isJavaKeyword(wordCheck));
-		assertFalse(mCheck.isIgnoreSituation(wordCheck));
-				
 	}
 	
+	/* 
+	 * h = 1
+	 * methods:
+	 * 	stub: visitToken()
+	 * 	call: setDictionary(), isJavaKeyword(), isIgnoreSituation
+	 */
 	@Test
-	public void testIsTrueIgnoreSituation() {
-		ExtremeContradictionCheck mCheck = spy(new ExtremeContradictionCheck());
-		String wordCheck = "Apple";
-		
-		doReturn(false).when(mCheck).isJavaKeyword(wordCheck);
-		doReturn(true).when(mCheck).isIgnoreSituation(wordCheck);
-		
-		assertFalse(mCheck.isJavaKeyword(wordCheck));
-		assertTrue(mCheck.isIgnoreSituation(wordCheck));
-				
-	}
-	
-	/* ********************************************************************************************* */
-	
-	@Test
-	public void testExtremeContradictionAllStubbed() {		
-		ExtremeContradictionCheck mCheck = spy(new ExtremeContradictionCheck());
-		String wordCheck = "Apple";
-		
-		doReturn(false).when(mCheck).isJavaKeyword(wordCheck);
-		doReturn(true).when(mCheck).isIgnoreSituation(wordCheck);
-		
-		assertFalse(mCheck.isJavaKeyword(wordCheck));
-		assertTrue(mCheck.isIgnoreSituation(wordCheck));
-	}
-	
-	@Test
-	public void testExtremeContradiction() {
+	public void testExtremeContradiction_isIgnoreSituation() {
 		// Arrange
 		ExtremeContradictionCheck mCheck = PowerMockito.mock(ExtremeContradictionCheck.class);
 		DetailAST dAST = PowerMockito.mock(DetailAST.class);
 		
 		// Act
 		doReturn("a").when(dAST).getText();
-		doReturn(false).when(mCheck).isJavaKeyword("a");
+		mCheck.setEnglishDictionary();
+		mCheck.visitToken(dAST);
 		
-		//mCheck.visitToken(dAST);
 		
 		// Assert
 		assertEquals(false, mCheck.isIgnoreSituation(dAST.getText()));
+		assertFalse(mCheck.isJavaKeyword(dAST.getText()));
+		assertNotNull(mCheck.getEnglishDictionary());
 	}
 	
+	/* 
+	 * h = 0
+	 * methods:
+	 * 	stub: 
+	 * 	call: visitToken(), setDictionary(), isJavaKeyword(), isIgnoreSituation
+	 */
 	@Test
-	public void testExtremeContradiction_RealIsJavaKeyword() {		
-		ExtremeContradictionCheck mCheck = spy(new ExtremeContradictionCheck());
-		String wordCheck = "Apple";
+	public void testExtremeContradiction_visitToken() {		
+		// Arrange
+		ExtremeContradictionCheck mCheck = PowerMockito.mock(ExtremeContradictionCheck.class);
+		DetailAST dAST = PowerMockito.mock(DetailAST.class);
 		
-		doReturn(true).when(mCheck).isIgnoreSituation(wordCheck);
+		// Act
+		doReturn(dAST).when(dAST).findFirstToken(TokenTypes.IDENT);
+		doReturn("abcdefg").when(dAST).getText();
+		mCheck.visitToken(dAST);
+
 		
-		assertFalse(mCheck.isJavaKeyword(wordCheck));
-		assertTrue(mCheck.isIgnoreSituation(wordCheck));
-	}
-	
-	@Test
-	public void testExtremeContradiction_AllReal() {		
-		ExtremeContradictionCheck mCheck = new ExtremeContradictionCheck();
-		String wordCheck = "Apple";
-				
-		assertFalse(mCheck.isJavaKeyword(wordCheck));
-		assertTrue(mCheck.isIgnoreSituation(wordCheck));
+		// Assert
+		verify(mCheck).visitToken(dAST);
+		assertEquals(false, mCheck.isIgnoreSituation(dAST.getText()));
+		assertFalse(mCheck.isJavaKeyword(dAST.getText()));
+		assertNotNull(mCheck.getEnglishDictionary());
 	}
 
 }
