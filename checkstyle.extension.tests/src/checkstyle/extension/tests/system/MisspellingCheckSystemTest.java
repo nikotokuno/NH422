@@ -21,6 +21,12 @@ import net.sf.eclipsecs.sample.checks.MisspellingCheck;
  *
  */
 public class MisspellingCheckSystemTest {
+	
+	 private static final long MEGABYTE = 1024L * 1024L;
+
+	    public static long bytesToMegabytes(long bytes) {
+	        return bytes / MEGABYTE;
+	    }
 
 	/**
 	 * @throws java.lang.Exception
@@ -55,15 +61,23 @@ public class MisspellingCheckSystemTest {
 		
 		long startTime = System.currentTimeMillis();
 		
-		MisspellingCheck mCheck = spy(new MisspellingCheck());
+		MisspellingCheck mCheck = new MisspellingCheck();
 		
 		mCheck.setEnglishDictionary();
-		
-		doReturn(mCheck.getEnglishDictionary()).when(mCheck).readDictionaryWordsFromFile();
 		
 		long finishTime = System.currentTimeMillis();
 
 		System.out.println("That took: "+(finishTime-startTime)+ " ms");
+		
+		 // Get the Java runtime
+        Runtime runtime = Runtime.getRuntime();
+        // Run the garbage collector
+        runtime.gc();
+        // Calculate the used memory
+        long memory = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("Ignore Situation (false): Used memory is bytes: " + memory);
+        System.out.println("Ignore Situation (false): Used memory is megabytes: "
+                + bytesToMegabytes(memory));
 		
 		assertNotNull(mCheck.getEnglishDictionary());
 	}

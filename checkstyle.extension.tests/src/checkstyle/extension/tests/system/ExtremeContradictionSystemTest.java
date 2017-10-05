@@ -31,6 +31,12 @@ import net.sf.eclipsecs.sample.checks.ExtremeContradictionCheck;
  */
 
 public class ExtremeContradictionSystemTest {
+	
+    private static final long MEGABYTE = 1024L * 1024L;
+
+    public static long bytesToMegabytes(long bytes) {
+        return bytes / MEGABYTE;
+    }
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -52,15 +58,23 @@ public class ExtremeContradictionSystemTest {
 	public void testPerformanceForEnglishDictionary() throws Exception {
 		long startTime = System.currentTimeMillis();
 		
-		ExtremeContradictionCheck mCheck = spy(new ExtremeContradictionCheck());
+		ExtremeContradictionCheck mCheck = new ExtremeContradictionCheck();
 		
 		mCheck.setEnglishDictionary();
 		
-		doReturn(mCheck.getEnglishDictionary()).when(mCheck).readDictionaryWordsFromFile();
-		
 		long finishTime = System.currentTimeMillis();
 
-		System.out.println("That took: "+(finishTime-startTime)+ " ms");
+		System.out.println("English Dictionary: That took: "+(finishTime-startTime)+ " ms");
+		
+        // Get the Java runtime
+        Runtime runtime = Runtime.getRuntime();
+        // Run the garbage collector
+        runtime.gc();
+        // Calculate the used memory
+        long memory = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("English Dictionary: Used memory is bytes: " + memory);
+        System.out.println("English Dictionary: Used memory is megabytes: "
+                + bytesToMegabytes(memory));
 		
 		assertNotNull(mCheck.getEnglishDictionary());
 	}
@@ -68,34 +82,47 @@ public class ExtremeContradictionSystemTest {
 	@Test
 	public void testPerformanceForIsFalseIgnoreSituation() {
 		long startTime = System.currentTimeMillis();
-		ExtremeContradictionCheck mCheck = spy(new ExtremeContradictionCheck());
+		ExtremeContradictionCheck mCheck = new ExtremeContradictionCheck();
 		String wordCheck = "aBz";
-		
-		doReturn(false).when(mCheck).isJavaKeyword(wordCheck);
-		doReturn(false).when(mCheck).isIgnoreSituation(wordCheck);
 		
 		long finishTime = System.currentTimeMillis();
 
-		System.out.println("That took: "+(finishTime-startTime)+ " ms");
+		System.out.println("Ignore Situation (false): That took: "+(finishTime-startTime)+ " ms");
+		
+		 // Get the Java runtime
+        Runtime runtime = Runtime.getRuntime();
+        // Run the garbage collector
+        runtime.gc();
+        // Calculate the used memory
+        long memory = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("Ignore Situation (false): Used memory is bytes: " + memory);
+        System.out.println("Ignore Situation (false): Used memory is megabytes: "
+                + bytesToMegabytes(memory));
 		
 		assertFalse(mCheck.isJavaKeyword(wordCheck));
-		assertFalse(mCheck.isIgnoreSituation(wordCheck));
-				
+		assertFalse(mCheck.isIgnoreSituation(wordCheck));	
 	}
 	
 
 	@Test
 	public void testPerformanceForIsTrueIgnoreSituation() {
 		long startTime = System.currentTimeMillis();
-		ExtremeContradictionCheck mCheck = spy(new ExtremeContradictionCheck());
+		ExtremeContradictionCheck mCheck = new ExtremeContradictionCheck();
 		String wordCheck = "Apple";
-		
-		doReturn(false).when(mCheck).isJavaKeyword(wordCheck);
-		doReturn(true).when(mCheck).isIgnoreSituation(wordCheck);
 		
 		long finishTime = System.currentTimeMillis();
 
-		System.out.println("That took: "+(finishTime-startTime)+ " ms");
+		System.out.println("Ignore Situation (true): That took: "+(finishTime-startTime)+ " ms");
+		
+		 // Get the Java runtime
+        Runtime runtime = Runtime.getRuntime();
+        // Run the garbage collector
+        runtime.gc();
+        // Calculate the used memory
+        long memory = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("Ignore Situation (true): Used memory is bytes: " + memory);
+        System.out.println("Ignore Situation (true): Used memory is megabytes: "
+                + bytesToMegabytes(memory));
 		
 		assertFalse(mCheck.isJavaKeyword(wordCheck));
 		assertTrue(mCheck.isIgnoreSituation(wordCheck));

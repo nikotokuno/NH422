@@ -183,26 +183,4 @@ public class ExtremeContradictionCheck extends AbstractCheck {
 	        }
 	        return result;
 	    }
-	 
-	 
-	 
-	 
-
-	    /**
-	     * Gets all the children which are one level below on the current DetailAST
-	     * parent node.
-	     * @param node
-	     *        Current parent node.
-	     * @return The list of children one level below on the current parent node.
-	     */
-	    private static List<DetailAST> getChildren(final DetailAST node) {
-	        final List<DetailAST> result = new LinkedList<>();
-	        DetailAST curNode = node.getFirstChild();
-	        while (curNode != null) {
-	            result.add(curNode);
-	            curNode = curNode.getNextSibling();
-	        }
-	        return result;
-	    }
-
 }

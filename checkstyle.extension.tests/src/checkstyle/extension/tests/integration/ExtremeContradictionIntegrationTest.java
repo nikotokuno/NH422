@@ -10,7 +10,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
+import org.junit.internal.runners.JUnit4ClassRunner;
 import org.easymock.EasyMock;
 import org.easymock.Mock;
 import org.junit.runner.RunWith;
@@ -18,6 +18,12 @@ import org.powermock.api.easymock.PowerMock;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+
+import com.puppycrawl.tools.checkstyle.api.DetailAST;
+
+import antlr.Token;
+import antlr.collections.AST;
+import antlr.collections.ASTEnumeration;
 
 import static org.mockito.Mockito.*;
 
@@ -27,6 +33,8 @@ import net.sf.eclipsecs.sample.checks.ExtremeContradictionCheck;
  * @author nikot
  *
  */
+@RunWith(JUnit4ClassRunner.class)
+@PrepareForTest(ExtremeContradictionCheck.class)
 public class ExtremeContradictionIntegrationTest {
 	
 	/**
@@ -92,6 +100,40 @@ public class ExtremeContradictionIntegrationTest {
 		assertFalse(mCheck.isJavaKeyword(wordCheck));
 		assertTrue(mCheck.isIgnoreSituation(wordCheck));
 				
+	}
+	
+	/* ********************************************************************************************* */
+	
+	@Test
+	public void testExtremeContradictionAllStubbed() {		
+		ExtremeContradictionCheck mCheck = spy(new ExtremeContradictionCheck());
+		String wordCheck = "Apple";
+		
+		doReturn(false).when(mCheck).isJavaKeyword(wordCheck);
+		doReturn(true).when(mCheck).isIgnoreSituation(wordCheck);
+		
+		assertFalse(mCheck.isJavaKeyword(wordCheck));
+		assertTrue(mCheck.isIgnoreSituation(wordCheck));
+	}
+	
+	@Test
+	public void testExtremeContradiction_RealIsJavaKeyword() {		
+		ExtremeContradictionCheck mCheck = spy(new ExtremeContradictionCheck());
+		String wordCheck = "Apple";
+		
+		doReturn(true).when(mCheck).isIgnoreSituation(wordCheck);
+		
+		assertFalse(mCheck.isJavaKeyword(wordCheck));
+		assertTrue(mCheck.isIgnoreSituation(wordCheck));
+	}
+	
+	@Test
+	public void testExtremeContradiction_AllReal() {		
+		ExtremeContradictionCheck mCheck = new ExtremeContradictionCheck();
+		String wordCheck = "Apple";
+				
+		assertFalse(mCheck.isJavaKeyword(wordCheck));
+		assertTrue(mCheck.isIgnoreSituation(wordCheck));
 	}
 
 }
