@@ -12,7 +12,7 @@ public class inconsistentIdentifiersCheck extends AbstractCheck
 	public int[] getDefaultTokens() {
 	    return new int[] {TokenTypes.OBJBLOCK, TokenTypes.METHOD_DEF, TokenTypes.VARIABLE_DEF};
 	}
-	    
+
 
 	ArrayList<String> variableNames = new ArrayList<String>();
 	ArrayList<String> methodNames = new ArrayList<String>();
@@ -22,115 +22,107 @@ public class inconsistentIdentifiersCheck extends AbstractCheck
 		if(ast.getType() == TokenTypes.OBJBLOCK)
 		{
 		 	DetailAST node = ast.getFirstChild();
-		    		
+
 		 	while(node != null)
 		 	{
 		 		if(node.getType() == TokenTypes.VARIABLE_DEF)
 		 		{
-		 			addVariableNames(node);
+		 			addVariableNames(node, this.variableNames);
 		 		}
 		 		else if(node.getType() == TokenTypes.METHOD_DEF)
 		 		{
-		    		addMethodNames(node);
+		    		addMethodNames(node, this.methodNames);
 		    	}
 		    	node = node.getNextSibling();
+
+		    	if(!(checkMethods(this.methodNames) && checkVariables(this.variableNames)) == true)
+				{
+					log(node.getLineNo(), "inconsistent identifier");
+				}
 		    }
-		 }
+		}
+
 	}
-	    
-	    
-    private boolean checkMethods() {
-	    	
-    	int countItems = methodNames.size() - 1;
+
+
+    public boolean checkMethods(ArrayList<String> names) {
+
+    	int countItems = names.size();
     	boolean check = false;
-    	int i = 0, j = 1;
-    	
+    	int i = 0;
+
     	if(countItems > 1)
     	{
-    		while (i != countItems)
+    		while (i != names.size() - 1)
     		{
-    			check = checkConsistency(methodNames.get(i), methodNames.get(j));
-    			if(j == countItems)
+    			check = checkConsistency(names.get(i), names.get(i+1));
+    			if(check == true)
     			{
-    				i++;
-    				j = i+1;
+    				break;
     			}
+    			i++;
     		}
     	}
     	return check;
-    	
+
 	}
 
-	private boolean checkVariables() {
-		int countItems = variableNames.size() - 1;
+	public boolean checkVariables(ArrayList<String> names) {
+		int countItems = names.size();
     	boolean check = false;
-    	int i = 0, j = 1;
-    	
+    	int i = 0;
+
     	if(countItems > 1)
     	{
-    		while (i != countItems)
+    		while (i != names.size() - 1)
     		{
-    			check = checkConsistency(variableNames.get(i), variableNames.get(j));
-    			if(j == countItems)
+    			check = checkConsistency(names.get(i), names.get(i+1));
+    			if(check == true)
     			{
-    				i++;
-    				j = i+1;
+    				break;
     			}
+    			i++;
     		}
     	}
     	return check;
 	}
 
-	private void addMethodNames(DetailAST node) 
+	private void addMethodNames(DetailAST node, ArrayList<String> names)
     {
     	DetailAST child = node.getFirstChild();
     	DetailAST children = child.findFirstToken(TokenTypes.SLIST);
-    	
+
     	while(child != null)
     	{
     		if(child.getType() == TokenTypes.SLIST)
     		{
     			while(children != null)
     			{
-    				addVariableNames(children);
+    				addVariableNames(children, this.variableNames);
     				children = children.getNextSibling();
-    			}
-    			boolean check = checkVariables();
-    	        if (check == false)
-    			{
-    			 	log(node.getLineNo(), "Inconsistent Identifier");
     			}
     		}
     		else if(child.getType() == TokenTypes.IDENT)
     		{
-    			methodNames.add(child.getText());
+    			names.add(child.getText());
     		}
     		child = child.getNextSibling();
     	}
-    	
-    	boolean check = checkMethods();
-        if (check == false)
-		{
-		 	log(node.getLineNo(), "Inconsistent Identifier");
-		}
 	}
 
-	public void addVariableNames(DetailAST node)
+	public void addVariableNames(DetailAST node, ArrayList<String> names)
     {
 		DetailAST child = node.findFirstToken(TokenTypes.IDENT);
-        variableNames.add(child.getText());
-        
-        boolean check = checkVariables();
-        if (check == false)
-		{
-		 	log(child.getLineNo(), "Inconsistent Identifier");
-		}
+        names.add(child.getText());
+
     }
-    
-	
+
+
     public boolean checkConsistency(String identifierName1, String identifierName2)
     {
-    	if (identifierName1.contains(identifierName2) && !(identifierName1 == identifierName2))
+    	identifierName1 = identifierName1.toLowerCase();
+    	identifierName2 = identifierName2.toLowerCase();
+    	if (identifierName2.contains(identifierName1) && !(identifierName1 == identifierName2))
     	{
     		return false;
     	}
