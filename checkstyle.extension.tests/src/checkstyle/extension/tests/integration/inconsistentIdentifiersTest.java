@@ -1,6 +1,8 @@
 package checkstyle.extension.tests.integration;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 
@@ -9,9 +11,19 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
+import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+
+import net.sf.eclipsecs.sample.checks.ExtremeContradictionCheck;
 import net.sf.eclipsecs.sample.checks.inconsistentIdentifiersCheck;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({inconsistentIdentifiersCheck.class,DetailAST.class})
 public class inconsistentIdentifiersTest {
 
 	@BeforeClass
@@ -58,6 +70,22 @@ public class inconsistentIdentifiersTest {
 		names.add("absolutePath");
 		//it also checks the checkConsistency method called in checkMethod()
 		assertEquals(true, check.checkVariables(names));	
+	}
+	@Test
+	public void testVisitToken() {		
+		inconsistentIdentifiersCheck check = PowerMockito.mock(inconsistentIdentifiersCheck.class);
+		DetailAST ast = PowerMockito.mock(DetailAST.class);
+		DetailAST ast2 = PowerMockito.mock(DetailAST.class);
+		
+		doReturn(ast).when(ast).findFirstToken(TokenTypes.VARIABLE_DEF);
+		doReturn(ast).when(ast2).findFirstToken(TokenTypes.METHOD_DEF);
+		check.addVariableNames(ast, check.variableNames);
+		check.addMethodNames(ast2, check.methodNames);
+
+		verify(check).visitToken(ast);
+		verify(check).visitToken(ast2);
+		assertNotNull(check.methodNames);
+		assertNotNull(check.variableNames);
 	}
 
 }

@@ -4,6 +4,7 @@
 package checkstyle.extension.tests.integration;
 
 import org.easymock.EasyMock;
+
 import org.easymock.Mock;
 import org.junit.After;
 import org.junit.AfterClass;

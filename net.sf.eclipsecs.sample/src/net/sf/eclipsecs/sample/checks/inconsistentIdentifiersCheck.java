@@ -14,8 +14,8 @@ public class inconsistentIdentifiersCheck extends AbstractCheck
 	}
 
 
-	ArrayList<String> variableNames = new ArrayList<String>();
-	ArrayList<String> methodNames = new ArrayList<String>();
+	public ArrayList<String> variableNames = new ArrayList<String>();
+	public ArrayList<String> methodNames = new ArrayList<String>();
 
 	@Override
 	public void visitToken(DetailAST ast) {
@@ -87,7 +87,7 @@ public class inconsistentIdentifiersCheck extends AbstractCheck
     	return check;
 	}
 
-	private void addMethodNames(DetailAST node, ArrayList<String> names)
+	public void addMethodNames(DetailAST node, ArrayList<String> names)
     {
     	DetailAST child = node.getFirstChild();
     	DetailAST children = child.findFirstToken(TokenTypes.SLIST);

@@ -11,16 +11,23 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import org.mockito.Mockito.*;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
 import net.sf.eclipsecs.sample.checks.inconsistentIdentifiersCheck;
 
-
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({inconsistentIdentifiersCheck.class,DetailAST.class})
 public class inconsistentIdentifierstest {
 
 	@BeforeClass
@@ -69,6 +76,30 @@ public class inconsistentIdentifierstest {
 		names.add("relative_path");
 		assertEquals(false, IICheck.checkVariables(names));
 	}
-
 	
+	@Test
+	public void testAddMethodNames()
+	{
+		inconsistentIdentifiersCheck IICheck = PowerMockito.mock(inconsistentIdentifiersCheck.class);
+		IICheck.methodNames = PowerMockito.mock(ArrayList.class);
+		DetailAST ast = PowerMockito.mock(DetailAST.class);
+		
+		doReturn(ast).when(ast).findFirstToken(TokenTypes.IDENT);
+		IICheck.methodNames.add(ast.getText());
+		
+		assertNotNull(IICheck.methodNames);
+	}
+
+	@Test
+	public void testAddVariableNames()
+	{
+		inconsistentIdentifiersCheck IICheck = PowerMockito.mock(inconsistentIdentifiersCheck.class);
+		IICheck.variableNames = PowerMockito.mock(ArrayList.class);
+		DetailAST ast = PowerMockito.mock(DetailAST.class);
+		
+		doReturn(ast).when(ast).findFirstToken(TokenTypes.IDENT);
+		IICheck.variableNames.add(ast.getText());
+		
+		assertNotNull(IICheck.variableNames);
+	}
 }
