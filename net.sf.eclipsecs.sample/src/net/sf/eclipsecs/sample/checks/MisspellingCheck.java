@@ -78,7 +78,7 @@ public class MisspellingCheck extends AbstractCheck {
 	
 	 @Override
 	 public void visitToken(DetailAST ast) {
-		 		this.setEnglishDictionary();
+		 		
 		 
 	            final DetailAST nameAst = ast.findFirstToken(TokenTypes.IDENT);
 	            final String typeName = nameAst.getText();
@@ -90,10 +90,13 @@ public class MisspellingCheck extends AbstractCheck {
 	     }
 	 
 	 public boolean isMisspelled(String word) {
-		 boolean isMisspelled = false;
+		 this.setEnglishDictionary();
 		 
-		 if(!this.englishDictionary.contains(word.toLowerCase())) {
-			 isMisspelled = true;
+		 boolean isMisspelled = true;
+
+		 
+		 if(this.englishDictionary.contains(word.toLowerCase())) {
+			 isMisspelled = false;
 		 }
 		 
 		 return isMisspelled;

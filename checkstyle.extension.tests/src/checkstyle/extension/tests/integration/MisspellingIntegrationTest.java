@@ -16,6 +16,9 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+
 import net.sf.eclipsecs.sample.checks.ExtremeContradictionCheck;
 import net.sf.eclipsecs.sample.checks.MisspellingCheck;
 
@@ -26,6 +29,8 @@ import static org.mockito.Mockito.*;
  * @author nikot
  *
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({MisspellingCheck.class,DetailAST.class})
 public class MisspellingIntegrationTest {
 
 	/**
@@ -56,29 +61,68 @@ public class MisspellingIntegrationTest {
 	public void tearDown() throws Exception {
 	}
 	
+	/* 
+	 * h = 0
+	 * methods:
+	 * 	stub: visitToken() , isMisspelled()
+	 * 	call: setEnglishDictionary()
+	 */
 	@Test
-	public void testEnglishDictionary() throws Exception {		
-		MisspellingCheck mCheck = spy(new MisspellingCheck());
+	public void testMisspelling_setEnglishDictionary() {		
+		MisspellingCheck mCheck = PowerMockito.mock(MisspellingCheck.class);
+		String testWord = "Apple";
+	
+		doReturn(false).when(mCheck).isMisspelled(testWord);
 		
 		mCheck.setEnglishDictionary();
-		
-		doReturn(mCheck.getEnglishDictionary()).when(mCheck).readDictionaryWordsFromFile();
 		
 		assertNotNull(mCheck.getEnglishDictionary());
 	}
 	
+	/* 
+	 * h = 0
+	 * methods:
+	 * 	stub: visitToken()
+	 * 	call: setEnglishDictionary(), isMisspelled()
+	 */
 	@Test
-	public void testMisspelling() throws Exception {
+	public void testMisspelling_isMisaspelled() throws Exception {
 		// Arrange
-		MisspellingCheck check = new MisspellingCheck();
-		String testWord1 = "Apple";
-		String testWord2 = "donots";
+				MisspellingCheck mCheck = PowerMockito.mock(MisspellingCheck.class);
+				DetailAST dAST = PowerMockito.mock(DetailAST.class);
+				
+				// Act
+				doReturn("Tacoes").when(dAST).getText();
+				mCheck.setEnglishDictionary();
+				boolean result = mCheck.isMisspelled(dAST.getText());
+				
+				// Assert
+				assertEquals(result, mCheck.isMisspelled(dAST.getText()));
+				assertNotNull(mCheck.getEnglishDictionary());
+	}
+	
+	
+	/* 
+	 * h = 0
+	 * methods:
+	 * 	stub: 
+	 * 	call: visitToken(), setEnglishDictionary(), isMisspelled()
+	 */
+	@Test
+	public void testMisspelling_visitToken() throws Exception {
+		// Arrange
+		MisspellingCheck mCheck = PowerMockito.mock(MisspellingCheck.class);
+		DetailAST dAST = PowerMockito.mock(DetailAST.class);
 		
 		// Act
-		// set the english dictionary
-		check.setEnglishDictionary();
+		doReturn(dAST).when(dAST).findFirstToken(TokenTypes.IDENT);
+		doReturn("Donuots").when(dAST).getText();
+		mCheck.visitToken(dAST);
+		boolean result = mCheck.isMisspelled(dAST.getText());
 		
-		assertEquals(false, check.isMisspelled(testWord1));
-		assertEquals(true, check.isMisspelled(testWord2));
+		// Assert
+		verify(mCheck).visitToken(dAST);
+		assertEquals(result, mCheck.isMisspelled(dAST.getText()));
+		assertNotNull(mCheck.getEnglishDictionary());
 	}
 }
