@@ -20,4 +20,4 @@ Each team member performed equal amounts of work during the development cycle. T
 
 # Integration Testing Trees #
 
-![alt text](Extreme Contradiction Check Integration Flow Diagram - Page 1.png)
+![alt text](Extreme Contradiction Check Integration Flow Diagram - Page 1.png?raw=true "Title")
