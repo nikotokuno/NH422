@@ -53,7 +53,7 @@ public class meaninglessTermsCheck extends AbstractCheck{
 		
 		try 
 		{
-			Scanner file = new Scanner(new File("C:\\Users\\hasnain\\Documents\\Fall2017\\dictionary.txt"));
+			Scanner file = new Scanner(new File("C:\\\\Users\\\\nikot\\\\Documents\\\\TEMP\\\\NH422\\\\net.sf.eclipsecs.sample\\\\dictionary.txt"));
 			
 			while (file.hasNext()) {
 				dict.add(file.next().trim().toLowerCase());	
