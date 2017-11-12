@@ -1,6 +1,7 @@
 package checkstyle.extension.tests.integration;
 
 import static org.junit.Assert.*;
+
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
