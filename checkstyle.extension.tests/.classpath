@@ -9,16 +9,14 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/net.sf.eclipsecs.checkstyle/checkstyle-7.6-all.jar" sourcepath="/net.sf.eclipsecs.checkstyle/checkstyle-7.6-src.zip"/>
-	<classpathentry kind="lib" path="C:/Users/hasnain/Downloads/PowerMockito-jars/jars/cglib-nodep-3.2.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/hasnain/Downloads/PowerMockito-jars/jars/easymock-3.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/hasnain/Downloads/PowerMockito-jars/jars/hamcrest-all-1.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/hasnain/Downloads/PowerMockito-jars/jars/javassist-3.12.1.GA.jar"/>
-	<classpathentry kind="lib" path="C:/Users/hasnain/Downloads/PowerMockito-jars/jars/objenesis-2.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/hasnain/Downloads/PowerMockito-jars/jars/powermock-api-easymock-1.6.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/hasnain/Downloads/PowerMockito-jars/jars/powermock-mockito-release-full-1.6.4-full.jar"/>
-	<classpathentry kind="lib" path="C:/Users/hasnain/Downloads/mockito-core-1.8.4.jar/mockito-core-1.8.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/hasnain/Downloads/junit.jar/junit.jar"/>
-	<classpathentry kind="lib" path="C:/Users/hasnain/Downloads/junit-4.12-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/hasnain/Downloads/junit-4.12-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nikot/Documents/PowerMockito/jars/powermock-mockito-release-full-1.6.4-full.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nikot/Documents/JUnit 4/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nikot/Documents/PowerMockito/jars/cglib-nodep-3.2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nikot/Documents/PowerMockito/jars/easymock-3.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nikot/Documents/PowerMockito/jars/hamcrest-all-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nikot/Documents/PowerMockito/jars/objenesis-2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nikot/Documents/PowerMockito/jars/powermock-api-easymock-1.6.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nikot/Documents/jboss-javassist-javassist-7822396/javassist.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nikot/Documents/Mockito/mockito-all-1.10.19.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

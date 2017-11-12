@@ -47,7 +47,7 @@ public class ExtremeContradictionCheckTest {
 				
 		// Act
 		ecCheck.setEnglishDictionary();
-		doReturn(tempDict).when(ecCheck).getEnglishDictionary();
+		//doReturn(tempDict).when(ecCheck).getEnglishDictionary();
 				
 		try {
 			Scanner file = new Scanner(new File("C:\\Users\\nikot\\Documents\\TEMP\\NH422\\net.sf.eclipsecs.sample\\dictionary.txt"));
@@ -89,7 +89,7 @@ public class ExtremeContradictionCheckTest {
 						
 				// Act
 				ecCheck.setEnglishDictionary();
-				doReturn(tempDict).when(ecCheck).readDictionaryWordsFromFile();
+				//doReturn(tempDict).when(ecCheck).readDictionaryWordsFromFile();
 						
 				try {
 					Scanner file = new Scanner(new File("C:\\Users\\nikot\\Documents\\TEMP\\NH422\\net.sf.eclipsecs.sample\\dictionary.txt"));
@@ -126,9 +126,9 @@ public class ExtremeContradictionCheckTest {
 		// Arrange
 		ExtremeContradictionCheck ecCheck = spy(new ExtremeContradictionCheck());
 		
-		doReturn(true).when(ecCheck).isJavaKeyword("abstract");
-		doReturn(true).when(ecCheck).isJavaKeyword("do");
-		doReturn(false).when(ecCheck).isJavaKeyword("chocolate");
+		//doReturn(true).when(ecCheck).isJavaKeyword("abstract");
+		//doReturn(true).when(ecCheck).isJavaKeyword("do");
+		//doReturn(false).when(ecCheck).isJavaKeyword("chocolate");
 						
 		// Assert
 		assertTrue(ecCheck.isJavaKeyword("abstract"));
