@@ -43,7 +43,7 @@ public class inconsistentIdentifierWB {
 	}
 
 	@Test
-	public void inconsistentIdentifierstest() {
+	public void checkConsistencytest() {
 		inconsistentIdentifiersCheck IICheck = new inconsistentIdentifiersCheck();
 		
 		assertEquals(false,  IICheck.checkConsistency("path", "absolute_path"));
@@ -51,21 +51,7 @@ public class inconsistentIdentifierWB {
 		assertEquals(true,  IICheck.checkConsistency("path", "path"));
 		assertEquals(true,  IICheck.checkConsistency("absolutePath", "relativePath"));
 	}
-	public void testCheckMethods()
-	{
-		inconsistentIdentifiersCheck IICheck = new inconsistentIdentifiersCheck();
-		ArrayList<String> names = new ArrayList<String>();
-		names.add("Object");
-		names.add("setDictionary");
-		names.add("createObject");
-		names.add("saveObject");
-		names.add("getDictionary");
-		names.add("Dictionary");
-		names.add("create");
-		assertEquals(false, IICheck.checkMethods(names));
-		assertEquals(true, IICheck.checkMethods(names));
-		
-	}
+
 	
 	@Test
 	public void testCheckMethod() {
