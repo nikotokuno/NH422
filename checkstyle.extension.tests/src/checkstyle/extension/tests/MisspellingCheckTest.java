@@ -78,7 +78,7 @@ public class MisspellingCheckTest  {
 	@Test
 	public void testGetEnglishDictionary() {		
 		// Arrange
-		MisspellingCheck ecCheck = new MisspellingCheck();
+		MisspellingCheck ecCheck = spy(new MisspellingCheck());
 		HashSet<String> tempDict = new HashSet<String>();
 				
 		// Act
@@ -104,7 +104,7 @@ public class MisspellingCheckTest  {
 	@Test
 	public void testSetEnglishDictionary() {
 		// Arrange
-		MisspellingCheck ecCheck = new MisspellingCheck();
+		MisspellingCheck ecCheck = spy(new MisspellingCheck());
 		HashSet<String> tempDict = new HashSet<String>();
 		
 		// Act
@@ -119,7 +119,7 @@ public class MisspellingCheckTest  {
 	@Test
 	public void testReadDictionaryWordsFromFile() {
 		// Arrange
-				MisspellingCheck ecCheck = new MisspellingCheck();
+				MisspellingCheck ecCheck = spy(new MisspellingCheck());
 				HashSet<String> tempDict = new HashSet<String>();
 						
 				// Act
@@ -147,7 +147,7 @@ public class MisspellingCheckTest  {
 	@Test
 	public void testIsMisspelled() {
 		// Arrange
-		MisspellingCheck ecCheck = new MisspellingCheck();
+		MisspellingCheck ecCheck = spy(new MisspellingCheck());
 		
 		// Act
 		ecCheck.setEnglishDictionary();

@@ -74,7 +74,7 @@ public class ExtremeContradictionCheckTest {
 		
 		// Act
 		ecCheck.setEnglishDictionary();
-		doReturn(tempDict).when(ecCheck).getEnglishDictionary();
+		//doReturn(tempDict).when(ecCheck).getEnglishDictionary();
 		
 		// Assert
 		
