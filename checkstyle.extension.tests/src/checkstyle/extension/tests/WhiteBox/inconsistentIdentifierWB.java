@@ -1,8 +1,8 @@
-package checkstyle.extension.tests.integration;
+package checkstyle.extension.tests.WhiteBox;
 
 import static org.junit.Assert.*;
-
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
@@ -20,12 +20,11 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-import net.sf.eclipsecs.sample.checks.ExtremeContradictionCheck;
 import net.sf.eclipsecs.sample.checks.inconsistentIdentifiersCheck;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({inconsistentIdentifiersCheck.class,DetailAST.class})
-public class inconsistentIdentifiersTest {
+//@RunWith(PowerMockRunner.class)
+//@PrepareForTest({inconsistentIdentifiersCheck.class,DetailAST.class})
+public class inconsistentIdentifierWB {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -43,6 +42,17 @@ public class inconsistentIdentifiersTest {
 	public void tearDown() throws Exception {
 	}
 
+	@Test
+	public void checkConsistencytest() {
+		inconsistentIdentifiersCheck IICheck = new inconsistentIdentifiersCheck();
+		
+		assertEquals(false,  IICheck.checkConsistency("path", "absolute_path"));
+		assertEquals(false,  IICheck.checkConsistency("path", "absolutePath"));
+		assertEquals(true,  IICheck.checkConsistency("path", "path"));
+		assertEquals(true,  IICheck.checkConsistency("absolutePath", "relativePath"));
+	}
+
+	
 	@Test
 	public void testCheckMethod() {
 		inconsistentIdentifiersCheck check = new inconsistentIdentifiersCheck();
@@ -72,6 +82,7 @@ public class inconsistentIdentifiersTest {
 		//it also checks the checkConsistency method called in checkMethod()
 		assertEquals(true, check.checkVariables(names));	
 	}
+	/*
 	@Test
 	public void testVisitToken() {		
 		inconsistentIdentifiersCheck check = PowerMockito.mock(inconsistentIdentifiersCheck.class);
@@ -88,5 +99,5 @@ public class inconsistentIdentifiersTest {
 		assertNotNull(check.methodNames);
 		assertNotNull(check.variableNames);
 	}
-
+*/
 }
