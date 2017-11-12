@@ -21,9 +21,12 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import static org.mockito.Mockito.*;
+
+import net.sf.eclipsecs.sample.checks.inconsistentIdentifiersCheck;
 import net.sf.eclipsecs.sample.checks.meaninglessTermsCheck;
 
-
+//@RunWith(PowerMockRunner.class)
+//@PrepareForTest({inconsistentIdentifiersCheck.class,DetailAST.class})
 public class MeaninglessTermWB {
 
 	@BeforeClass
