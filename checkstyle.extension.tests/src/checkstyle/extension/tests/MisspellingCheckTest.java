@@ -78,12 +78,11 @@ public class MisspellingCheckTest  {
 	@Test
 	public void testGetEnglishDictionary() {		
 		// Arrange
-		MisspellingCheck ecCheck = spy(new MisspellingCheck());
+		MisspellingCheck ecCheck = new MisspellingCheck();
 		HashSet<String> tempDict = new HashSet<String>();
 				
 		// Act
 		ecCheck.setEnglishDictionary();
-		doReturn(tempDict).when(ecCheck).getEnglishDictionary();
 				
 		try {
 			Scanner file = new Scanner(new File("C:\\Users\\nikot\\Documents\\TEMP\\NH422\\net.sf.eclipsecs.sample\\dictionary.txt"));
@@ -105,12 +104,12 @@ public class MisspellingCheckTest  {
 	@Test
 	public void testSetEnglishDictionary() {
 		// Arrange
-		MisspellingCheck ecCheck = spy(new MisspellingCheck());
+		MisspellingCheck ecCheck = new MisspellingCheck();
 		HashSet<String> tempDict = new HashSet<String>();
 		
 		// Act
 		ecCheck.setEnglishDictionary();
-		doReturn(tempDict).when(ecCheck).getEnglishDictionary();
+		//doReturn(tempDict).when(ecCheck).getEnglishDictionary();
 		
 		// Assert
 		
@@ -120,12 +119,12 @@ public class MisspellingCheckTest  {
 	@Test
 	public void testReadDictionaryWordsFromFile() {
 		// Arrange
-				MisspellingCheck ecCheck = spy(new MisspellingCheck());
+				MisspellingCheck ecCheck = new MisspellingCheck();
 				HashSet<String> tempDict = new HashSet<String>();
 						
 				// Act
 				ecCheck.setEnglishDictionary();
-				doReturn(tempDict).when(ecCheck).readDictionaryWordsFromFile();
+				//doReturn(tempDict).when(ecCheck).readDictionaryWordsFromFile();
 						
 				try {
 					Scanner file = new Scanner(new File("C:\\Users\\nikot\\Documents\\TEMP\\NH422\\net.sf.eclipsecs.sample\\dictionary.txt"));
@@ -148,12 +147,12 @@ public class MisspellingCheckTest  {
 	@Test
 	public void testIsMisspelled() {
 		// Arrange
-		MisspellingCheck ecCheck = spy(new MisspellingCheck());
+		MisspellingCheck ecCheck = new MisspellingCheck();
 		
 		// Act
 		ecCheck.setEnglishDictionary();
-		doReturn(false).when(ecCheck).isMisspelled("apple");
-		doReturn(true).when(ecCheck).isMisspelled("appleez");
+		//doReturn(false).when(ecCheck).isMisspelled("apple");
+		//doReturn(true).when(ecCheck).isMisspelled("appleez");
 		
 		// Assert
 		assertFalse(ecCheck.isMisspelled("apple"));
